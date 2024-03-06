@@ -9,7 +9,7 @@ export class User {
   @Prop({ lowercase: true, unique: true })
   username: string;
 
-  @Prop({ select: false })
+  @Prop()
   password: string;
 }
 
