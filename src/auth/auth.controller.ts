@@ -1,30 +1,23 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { LoginDTO, RegisterDTO } from './auth.dto';
+import { ResponseMessage } from '../common/response_message.decorator';
+import { TransformInterceptor } from '../common/response.interceptor';
 
-@Controller('auth')
+@Controller()
+@UseInterceptors(TransformInterceptor)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  async login(
-    @Body() body: { username: string; password: string },
-  ): Promise<{ message: string; token: string }> {
-    const data = {
-      username: body.username,
-      password: body.password,
-    };
-    return await this.authService.login(data);
+  @ResponseMessage('Login successful')
+  async login(@Body() loginDTO: LoginDTO): Promise<any> {
+    return await this.authService.login(loginDTO);
   }
 
   @Post('register')
-  async register(
-    @Body() body: { email: string; username: string; password: string },
-  ): Promise<{ message: string; user: any }> {
-    const data = {
-      email: body.email,
-      username: body.username,
-      password: body.password,
-    };
-    return await this.authService.register(data);
+  @ResponseMessage('User registered successfully')
+  async register(@Body() registerDTO: RegisterDTO): Promise<any> {
+    return await this.authService.register(registerDTO);
   }
 }

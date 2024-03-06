@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from '../user/model/user.model';
+import { User, UserSchema } from '../user/user.model';
 import { JwtModule } from '@nestjs/jwt';
 import { secretKey } from './config';
 import { AuthController } from './auth.controller';

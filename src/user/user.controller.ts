@@ -1,16 +1,36 @@
 import { UserService } from './user.service';
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
-import { Request as RequestType } from 'express';
+import { Request as RequestType, Response } from 'express';
 
-@Controller('user')
+@Controller()
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get('/')
+  @Get('/getProfile')
   @UseGuards(AuthGuard)
-  async profile(@Req() request: RequestType): Promise<any> {
+  async getProfile(@Req() request: RequestType): Promise<any> {
     const user = request.user;
     return this.userService.getUserByUsername(user.username);
+  }
+
+  @Post('createProfile')
+  @UseGuards(AuthGuard)
+  async createProfile(@Res() res: Response): Promise<any> {
+    res.json({ message: 'Profile created' });
+  }
+
+  @Put('updateProfile')
+  @UseGuards(AuthGuard)
+  async updateProfile(@Res() res: Response): Promise<any> {
+    res.json({ message: 'Profile updated' });
   }
 }
