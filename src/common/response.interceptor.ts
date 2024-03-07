@@ -31,7 +31,7 @@ export class TransformInterceptor<T>
           this.reflector.get<string>(
             'response_message',
             context.getHandler(),
-          ) || '',
+          ) || undefined,
         data,
       })),
     );

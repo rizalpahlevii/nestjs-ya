@@ -1,17 +1,22 @@
 import { UserService } from './user.service';
 import {
+  Body,
   Controller,
   Get,
   Post,
   Put,
   Req,
-  Res,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
-import { Request as RequestType, Response } from 'express';
+import { Request as RequestType } from 'express';
+import { TransformInterceptor } from '../common/response.interceptor';
+import { CreateProfileDTO } from './user.dto';
+import { ResponseMessage } from '../common/response_message.decorator';
 
 @Controller()
+@UseInterceptors(TransformInterceptor)
 export class UserController {
   constructor(private userService: UserService) {}
 
@@ -24,13 +29,23 @@ export class UserController {
 
   @Post('createProfile')
   @UseGuards(AuthGuard)
-  async createProfile(@Res() res: Response): Promise<any> {
-    res.json({ message: 'Profile created' });
+  @ResponseMessage('Profile created')
+  async createProfile(
+    @Body() createProfileDTO: CreateProfileDTO,
+    @Req() request: RequestType,
+  ): Promise<any> {
+    const user = request.user;
+    await this.userService.createProfile(user.username, createProfileDTO);
   }
 
+  @ResponseMessage('Profile updated')
   @Put('updateProfile')
   @UseGuards(AuthGuard)
-  async updateProfile(@Res() res: Response): Promise<any> {
-    res.json({ message: 'Profile updated' });
+  async updateProfile(
+    @Body() createProfileDTO: CreateProfileDTO,
+    @Req() request: RequestType,
+  ): Promise<any> {
+    const user = request.user;
+    await this.userService.updateUserProfile(user.username, createProfileDTO);
   }
 }
