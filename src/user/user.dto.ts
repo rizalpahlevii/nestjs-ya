@@ -23,4 +23,8 @@ export class CreateProfileDTO {
   @IsNotEmpty()
   @IsString({ each: true })
   interests: string[];
+
+  zodiac: string;
+
+  horoscope: string;
 }
