@@ -5,14 +5,19 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { TransformInterceptor } from './common/response.interceptor';
+import { MessageModule } from './message/message.module';
+import { ConfigModule } from '@nestjs/config';
+import * as process from 'process';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://rizal:UIIyXej8x1vz6KOH@cluster0.cjlykyk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-    ),
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.MONGO_URI, {
+      dbName: process.env.MONGO_NAME,
+    }),
     UserModule,
     AuthModule,
+    MessageModule,
   ],
   controllers: [AppController],
   providers: [AppService, TransformInterceptor],

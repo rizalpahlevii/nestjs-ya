@@ -4,22 +4,6 @@ import { Model } from 'mongoose';
 import { CreateProfileDTO } from './user.dto';
 import { getHoroscope, getZodiacSign, User } from './user.model';
 
-interface UserResponse {
-  username: string;
-  email: string;
-  profile: UserProfileResponse;
-}
-
-interface UserProfileResponse {
-  name: string;
-  image: string;
-  bio: string;
-  birthdate: Date;
-  height: number;
-  weight: number;
-  interests: string[];
-}
-
 @Injectable()
 export class UserService {
   logger: Logger;
@@ -49,7 +33,6 @@ export class UserService {
         date.getMonth() + 2,
       );
       updateProfileDTO.horoscope = getHoroscope(updateProfileDTO.zodiac);
-      console.log(updateProfileDTO);
       return this.userModel.updateOne(
         { username: username },
         { $set: { profile: updateProfileDTO } },

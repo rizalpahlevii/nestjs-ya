@@ -53,7 +53,11 @@ export class AuthService {
         throw new NotFoundException('Password does not match');
       }
 
-      const payload = { username: user.username, sub: user._id };
+      const payload = {
+        username: user.username,
+        sub: user._id,
+        email: user.email,
+      };
       const token = this.jwtService.sign(payload);
       return {
         id: user._id,

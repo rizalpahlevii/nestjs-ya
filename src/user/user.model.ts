@@ -33,7 +33,7 @@ export class UserProfile {
 
 @Schema()
 export class User {
-  @Prop()
+  @Prop({ lowercase: true, unique: true })
   email: string;
 
   @Prop({ lowercase: true, unique: true })
