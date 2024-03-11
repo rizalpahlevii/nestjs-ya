@@ -24,7 +24,7 @@ import { ConfigModule } from '@nestjs/config';
           type: 'direct',
         },
       ],
-      uri: 'amqp://rabbitmq:5672',
+      uri: 'amqp://localhost:5672',
       connectionInitOptions: { wait: false },
     }),
     JwtModule,
