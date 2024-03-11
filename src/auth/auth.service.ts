@@ -6,19 +6,6 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { LoginDTO, RegisterDTO } from './auth.dto';
 
-interface LoginResponse {
-  id?: any;
-  username: string;
-  email: string;
-  token: string;
-}
-
-interface UserResponse {
-  id: any;
-  username: string;
-  email: string;
-}
-
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
 
@@ -27,7 +14,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(data: RegisterDTO): Promise<UserResponse> {
+  async register(data: RegisterDTO): Promise<any> {
     try {
       const checkUser = await this.userModel.findOne({
         $or: [{ username: data.username }, { email: data.email }],
@@ -49,7 +36,7 @@ export class AuthService {
     }
   }
 
-  async login(data: LoginDTO): Promise<LoginResponse> {
+  async login(data: LoginDTO): Promise<any> {
     try {
       const user = await this.userModel.findOne({ username: data.username });
       if (!user) {

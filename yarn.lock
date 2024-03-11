@@ -844,7 +844,7 @@
     jsonc-parser "3.2.1"
     pluralize "8.0.0"
 
-"@nestjs/testing@^10.0.0":
+"@nestjs/testing@^10.3.3":
   version "10.3.3"
   resolved "https://registry.npmjs.org/@nestjs/testing/-/testing-10.3.3.tgz"
   integrity sha512-kX20GfjAImL5grd/i69uD/x7sc00BaqGcP2dRG3ilqshQUuy5DOmspLCr3a2C8xmVU7kzK4spT0oTxhe6WcCAA==
