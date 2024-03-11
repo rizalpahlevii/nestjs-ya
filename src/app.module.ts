@@ -11,7 +11,10 @@ import * as process from 'process';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: ['.env'],
+      isGlobal: true,
+    }),
     MongooseModule.forRoot(process.env.MONGO_URI, {
       dbName: process.env.MONGO_NAME,
     }),

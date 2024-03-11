@@ -1,4 +1,4 @@
-import { Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/user/user.model';
@@ -29,6 +29,14 @@ export class AuthService {
 
   async register(data: RegisterDTO): Promise<UserResponse> {
     try {
+      const checkUser = await this.userModel.findOne({
+        $or: [{ username: data.username }, { email: data.email }],
+      });
+      if (checkUser) {
+        throw new BadRequestException(
+          'User already exists with this username or email',
+        );
+      }
       data.password = await bcrypt.hash(data.password, 10);
       const user = await this.userModel.create(data);
       return {
@@ -37,7 +45,7 @@ export class AuthService {
         email: user.email,
       };
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   }
 
