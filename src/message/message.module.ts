@@ -5,8 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { Message, MessageSchema } from './message.model';
 import { User, UserSchema } from '../user/user.model';
-import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { ConfigModule } from '@nestjs/config';
+import { SocketService } from '../socket/socket.service';
 
 @Module({
   imports: [
@@ -16,20 +16,9 @@ import { ConfigModule } from '@nestjs/config';
     }),
     MongooseModule.forFeature([{ name: Message.name, schema: MessageSchema }]),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-
-    RabbitMQModule.forRoot(RabbitMQModule, {
-      exchanges: [
-        {
-          name: 'exchange1',
-          type: 'direct',
-        },
-      ],
-      uri: 'amqp://localhost:5672',
-      connectionInitOptions: { wait: false },
-    }),
     JwtModule,
   ],
   controllers: [MessageController],
-  providers: [MessageService],
+  providers: [MessageService, SocketService],
 })
 export class MessageModule {}
