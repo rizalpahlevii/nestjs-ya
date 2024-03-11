@@ -3,6 +3,7 @@
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
   <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
@@ -45,6 +46,19 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
+## Running the app with docker
+
+```bash
+# Copy .env.example to .env
+$ cp .env.example .env
+
+# Build the docker image
+$ docker compose up
+
+# Access the app
+$ curl http://localhost:3000
+```
+
 ## Test
 
 ```bash
@@ -60,7 +74,8 @@ $ yarn run test:cov
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If
+you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
 ## Stay in touch
 
